@@ -1,0 +1,30 @@
+<div
+  appDrag
+  class="container"
+  [style.width.px]="annotation().width"
+  [style.height.px]="annotation().height"
+  [style.left.px]="annotation().x"
+  [style.top.px]="annotation().y"
+>
+  <div class="header">
+    <span class="time">{{ annotation().createdAt }}</span>
+    <div class="action-buttons">
+      <button
+        class="action-button"
+        (click)="collapseAnnotation()"
+        (mousedown)="$event.stopPropagation()"
+      >
+        -
+      </button>
+      <button
+        class="action-button"
+        (click)="deleteAnnotation()"
+        (mousedown)="$event.stopPropagation()"
+      >
+        x
+      </button>
+    </div>
+  </div>
+
+  <textarea class="annotation-text" [formControl]="annotationControl"></textarea>
+</div>
