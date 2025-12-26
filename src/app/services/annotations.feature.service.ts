@@ -45,4 +45,11 @@ export class AnnotationsFeatureService {
   deleteAnnotation(annotationId: string): void {
     this._mockService.deleteAnnotation(annotationId);
   }
+
+  /** Обновить аннотацию */
+  updateAnnotation(annotation: AnnotationInfo): void {
+    const annotationId = annotation.id;
+
+    this._mockService.updateAnnotation(annotationId, annotation);
+  }
 }

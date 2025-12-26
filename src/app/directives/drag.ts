@@ -1,5 +1,5 @@
-import { Directive, ElementRef, inject, input } from '@angular/core';
-import { fromEvent, map, Subscription, switchMap, takeUntil } from 'rxjs';
+import { Directive, ElementRef, inject, input, output } from '@angular/core';
+import { finalize, fromEvent, map, Subscription, switchMap, takeUntil, tap } from 'rxjs';
 
 /** Директива для перетаскивания */
 @Directive({
@@ -10,6 +10,11 @@ export class Drag {
 
   /** Подписка для каждой аннотации */
   private subscriptions = new Subscription();
+  /** Координаты X,Y */
+  private coordinates: { x: number; y: number };
+
+  /** Событие при окончании перетаскивания */
+  handleDrag = output<{ x: number; y: number }>();
 
   /** @inheritdoc */
   ngOnInit() {
@@ -33,7 +38,9 @@ export class Drag {
             x: initialLeft + (move.clientX - startX),
             y: initialTop + (move.clientY - startY),
           })),
+          tap((move) => (this.coordinates = { x: move.x, y: move.y })),
           takeUntil(mouseup$),
+          finalize(() => this.handleDrag.emit(this.coordinates)),
         );
       }),
     );

@@ -86,4 +86,15 @@ export class MockService {
 
     this._annotations.next(ANNOTATIONS_MOCK_DATA);
   }
+
+  /** Обновить аннотацию */
+  updateAnnotation(annotationId: string, newAnnotation: AnnotationInfo): void {
+    ANNOTATIONS_MOCK_DATA.splice(
+      ANNOTATIONS_MOCK_DATA.findIndex((annotation) => annotation.id === annotationId),
+      1,
+      newAnnotation,
+    );
+
+    this._annotations.next(ANNOTATIONS_MOCK_DATA);
+  }
 }

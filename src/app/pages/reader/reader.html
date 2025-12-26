@@ -7,9 +7,9 @@
     <app-annotation
       [annotation]="annotation"
       (delete)="deleteAnnotation($event)"
-      (collapse)="collapseAnnotation($event)"
+      (update)="updateAnnotation($event)"
     />
   }
 </div>
 
-<app-action-buttons />
+<app-action-buttons (save)="savePageWithAnnotations()" />

@@ -65,6 +65,19 @@ export class Reader {
     this._annotationsFeatureService.deleteAnnotation(annotationId);
   }
 
-  /** Свернуть аннотацию */
-  collapseAnnotation(annotationId: string): void {}
+  /** Сохранить страницу с аннотациями */
+  savePageWithAnnotations(): void {
+    const pages = this.document()?.pages;
+    const annotations = this.annotations();
+
+    console.log('result: ', {
+      pages,
+      annotations,
+    });
+  }
+
+  /** Обновить аннотацию */
+  updateAnnotation(annotation: AnnotationInfo): void {
+    this._annotationsFeatureService.updateAnnotation(annotation);
+  }
 }

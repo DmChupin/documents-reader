@@ -1,6 +1,7 @@
 <div
-  appDrag
   class="container"
+  appDrag
+  (handleDrag)="handleDrag($event)"
   [style.width.px]="annotation().width"
   [style.height.px]="annotation().height"
   [style.left.px]="annotation().x"
@@ -9,14 +10,6 @@
   <div class="header">
     <span class="time">{{ annotation().createdAt }}</span>
     <div class="action-buttons">
-      <button
-        class="action-button"
-        title="Свернуть"
-        (click)="collapseAnnotation()"
-        (mousedown)="$event.stopPropagation()"
-      >
-        <img class="button-icon" src="icons/minus.svg" alt="Свернуть" />
-      </button>
       <button
         class="action-button"
         title="Удалить"
