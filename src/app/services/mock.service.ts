@@ -30,19 +30,55 @@ const DOCUMENTS_MOCK_DATA: UploadedDocument[] = [
       },
     ],
   },
+  {
+    id: 2,
+    name: 'test doc',
+    pages: [
+      {
+        number: 1,
+        imageUrl: 'pages/1.png',
+      },
+      {
+        number: 2,
+        imageUrl: 'pages/2.png',
+      },
+      {
+        number: 3,
+        imageUrl: 'pages/3.png',
+      },
+      {
+        number: 4,
+        imageUrl: 'pages/4.png',
+      },
+      {
+        number: 5,
+        imageUrl: 'pages/5.png',
+      },
+    ],
+  },
 ];
 
 /** Моковые данные "Аннотации" */
 const ANNOTATIONS_MOCK_DATA: AnnotationInfo[] = [
   {
     id: 'gee2-dedr-4441-dds1',
-    documentId: 1,
+    documentId: 2,
     x: 150,
     y: 150,
     width: 300,
     height: 250,
     text: 'Анннотация',
     createdAt: '12:12',
+  },
+  {
+    id: 'gee2-dedr-4441-dds3',
+    documentId: 2,
+    x: 550,
+    y: 550,
+    width: 160,
+    height: 150,
+    text: 'Тут текст аннотации',
+    createdAt: '12:16',
   },
 ];
 
