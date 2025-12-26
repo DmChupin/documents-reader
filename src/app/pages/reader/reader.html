@@ -1,4 +1,8 @@
-<div class="pages-container" (click)="pageClick($event)">
+<div
+  class="pages-container"
+  [style.transform]="`scale(${zoomLevel()})`"
+  (click)="pageClick($event)"
+>
   @for (page of document()?.pages; track $index) {
     <img [src]="page.imageUrl" [alt]="page.number" />
   }
@@ -12,4 +16,4 @@
   }
 </div>
 
-<app-action-buttons (save)="savePageWithAnnotations()" />
+<app-action-buttons (save)="savePageWithAnnotations()" (zoomIn)="zoomIn()" (zoomOut)="zoomOut()" />

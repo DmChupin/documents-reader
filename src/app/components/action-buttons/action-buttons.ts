@@ -17,20 +17,20 @@ export class ActionButtons {
   );
 
   /** Output-событие увеличить документ */
-  increase = output<void>();
+  zoomIn = output<void>();
   /** Output-событие уменьшить документ */
-  decrease = output<void>();
+  zoomOut = output<void>();
   /** Output-событие сохранить документ */
   save = output<void>();
 
   /** Увеличить размер страницы */
-  increasePageSize(): void {
-    this.increase.emit();
+  zoomPageIn(): void {
+    this.zoomIn.emit();
   }
 
   /** Уменьшить размер страницы */
-  decreasePageSize(): void {
-    this.increase.emit();
+  zoomPageOut(): void {
+    this.zoomOut.emit();
   }
 
   /** Сохранить страницу */

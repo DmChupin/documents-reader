@@ -25,6 +25,8 @@ export class Reader {
   private readonly _documentId = this._route.snapshot.paramMap.get('documentId');
   private readonly _activeTool = this._readerFeatureService.activeTool;
 
+  /** Уровень зума */
+  readonly zoomLevel = this._readerFeatureService.zoomLevel;
   /** Документ */
   document: Signal<UploadedDocument | undefined>;
   /** Список аннотаций */
@@ -70,6 +72,8 @@ export class Reader {
     const pages = this.document()?.pages;
     const annotations = this.annotations();
 
+    alert('Документ со сносками сохранён. Посмотрите, пожалуйста, в консоль разработчика');
+
     console.log('result: ', {
       pages,
       annotations,
@@ -79,5 +83,15 @@ export class Reader {
   /** Обновить аннотацию */
   updateAnnotation(annotation: AnnotationInfo): void {
     this._annotationsFeatureService.updateAnnotation(annotation);
+  }
+
+  /** Увеличить зум */
+  zoomIn(): void {
+    this._readerFeatureService.zoomIn();
+  }
+
+  /** Уменьшить зум */
+  zoomOut(): void {
+    this._readerFeatureService.zoomOut();
   }
 }
