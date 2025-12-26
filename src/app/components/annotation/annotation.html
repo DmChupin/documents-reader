@@ -11,17 +11,19 @@
     <div class="action-buttons">
       <button
         class="action-button"
+        title="Свернуть"
         (click)="collapseAnnotation()"
         (mousedown)="$event.stopPropagation()"
       >
-        -
+        <img class="button-icon" src="icons/minus.svg" alt="Свернуть" />
       </button>
       <button
         class="action-button"
+        title="Удалить"
         (click)="deleteAnnotation()"
         (mousedown)="$event.stopPropagation()"
       >
-        x
+        <img class="button-icon" src="icons/trash.svg" alt="Удалить" />
       </button>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, computed, inject, output } from '@angular/core';
 import { ReaderFeatureService } from '../../services';
 import { Tool } from '../../models';
 
@@ -11,6 +11,10 @@ import { Tool } from '../../models';
 })
 export class ActionButtons {
   private readonly _readerFeatureService = inject(ReaderFeatureService);
+
+  readonly isAnnotationActive = computed(
+    () => this._readerFeatureService.activeTool() === Tool.Annotation,
+  );
 
   /** Output-событие увеличить документ */
   increase = output<void>();

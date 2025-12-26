@@ -1,8 +1,20 @@
 <div class="container">
-  <button class="action-button" type="button" (click)="decreasePageSize()">Отдалить</button>
-  <button class="action-button" type="button" (click)="increasePageSize()">Приблизить</button>
-  <button class="action-button" type="button" (click)="selectToolAnnotation()">
-    Добавить сноску
+  <button class="action-button" type="button" title="Отдалить" (click)="decreasePageSize()">
+    <img class="button-icon" src="icons/minus-lens.svg" alt="Отдалить" />
   </button>
-  <button class="action-button" type="button" (click)="savePageWithAnnotations()">Сохранить</button>
+  <button class="action-button" type="button" title="Приблизить" (click)="increasePageSize()">
+    <img class="button-icon" src="icons/plus-lens.svg" alt="Приблизить" />
+  </button>
+  <button
+    class="action-button"
+    type="button"
+    title="Добавить аннотацию"
+    [class.active]="isAnnotationActive()"
+    (click)="selectToolAnnotation()"
+  >
+    <img class="button-icon" src="icons/annotation.svg" alt="Добавить аннотацию" />
+  </button>
+  <button class="action-button" type="button" title="Сохранить" (click)="savePageWithAnnotations()">
+    <img class="button-icon" src="icons/save.svg" alt="Сохранить" />
+  </button>
 </div>
