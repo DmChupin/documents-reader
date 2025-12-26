@@ -1,19 +1,27 @@
-<div
-  class="pages-container"
-  [style.transform]="`scale(${zoomLevel()})`"
-  (click)="pageClick($event)"
->
-  @for (page of document()?.pages; track $index) {
-    <img [src]="page.imageUrl" [alt]="page.number" />
-  }
+@if (document()) {
+  <div
+    class="pages-container"
+    [style.transform]="`scale(${zoomLevel()})`"
+    (click)="pageClick($event)"
+  >
+    @for (page of document()?.pages; track $index) {
+      <img [src]="page.imageUrl" [alt]="page.number" />
+    }
 
-  @for (annotation of annotations(); track $index) {
-    <app-annotation
-      [annotation]="annotation"
-      (delete)="deleteAnnotation($event)"
-      (update)="updateAnnotation($event)"
-    />
-  }
-</div>
+    @for (annotation of annotations(); track $index) {
+      <app-annotation
+        [annotation]="annotation"
+        (delete)="deleteAnnotation($event)"
+        (update)="updateAnnotation($event)"
+      />
+    }
+  </div>
 
-<app-action-buttons (save)="savePageWithAnnotations()" (zoomIn)="zoomIn()" (zoomOut)="zoomOut()" />
+  <app-action-buttons
+    (save)="savePageWithAnnotations()"
+    (zoomIn)="zoomIn()"
+    (zoomOut)="zoomOut()"
+  />
+} @else {
+  <div class="not-found-container">Ууупс, документа с таким идентификатором не существует</div>
+}
