@@ -3,6 +3,7 @@ import { MockService } from './mock.service';
 import { EMPTY, Observable } from 'rxjs';
 import { AnnotationInfo } from '../models';
 import { ReaderFeatureService } from './reader.feature.service';
+import { v4 as uuidv4 } from 'uuid';
 
 /** Ширина аннотации при добавлении по умолчанию в px */
 const BASIC_NOTE_WIDTH = 250;
@@ -32,7 +33,7 @@ export class AnnotationsFeatureService {
     const width = this.calculateWidth();
     const currentDate = new Date();
     const newAnnotation: AnnotationInfo = {
-      id: crypto.randomUUID().toString(),
+      id: uuidv4(),
       createdAt: `${currentDate.getHours()}:${currentDate.getMinutes()}`,
       text: '',
       height,
