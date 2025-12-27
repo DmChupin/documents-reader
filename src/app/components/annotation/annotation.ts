@@ -15,6 +15,7 @@ import { JsonPipe } from '@angular/common';
 })
 export class Annotation implements OnInit {
   private readonly _destroyRef = inject(DestroyRef);
+  /** Анннотация */
   readonly annotation = input.required<AnnotationInfo>();
 
   /** Контрол с текстом в аннотации */
