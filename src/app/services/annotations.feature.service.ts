@@ -3,9 +3,9 @@ import { MockService } from './mock.service';
 import { EMPTY, Observable } from 'rxjs';
 import { AnnotationInfo } from '../models';
 
-/** Ширина аннотации при добавлении по умолчанию */
+/** Ширина аннотации при добавлении по умолчанию в px */
 const BASIC_NOTE_WIDTH = 250;
-/** Высота аннотации при добавлении по умолчанию */
+/** Высота аннотации при добавлении по умолчанию в px */
 const BASIC_NOTE_HEIGHT = 220;
 
 /** Feature-сервис для работы с аннотациями */
@@ -25,16 +25,18 @@ export class AnnotationsFeatureService {
   }
 
   /** Добавление аннотации */
-  addAnnotation(documentId: number, x: number, y: number): void {
+  addAnnotation(documentId: number, targetX: number, targetY: number): void {
+    const height = this.calculateHeight();
+    const width = this.calculateWidth();
     const currentDate = new Date();
     const newAnnotation: AnnotationInfo = {
       id: crypto.randomUUID().toString(),
       createdAt: `${currentDate.getHours()}:${currentDate.getMinutes()}`,
       text: '',
-      height: BASIC_NOTE_HEIGHT,
-      width: BASIC_NOTE_WIDTH,
-      x: x + window.scrollX,
-      y: y + window.scrollY,
+      height,
+      width,
+      x: targetX + window.scrollX,
+      y: targetY + window.scrollY,
       documentId,
     };
 
@@ -51,5 +53,22 @@ export class AnnotationsFeatureService {
     const annotationId = annotation.id;
 
     this._mockService.updateAnnotation(annotationId, annotation);
+  }
+
+  /** Расчёт ширины аннотации */
+  private calculateWidth(): number {
+    const screenHalfWidth = window.innerWidth / 2;
+
+    return Math.min(BASIC_NOTE_WIDTH, screenHalfWidth);
+  }
+
+  /**
+   * Расчёт высоты аннотации
+   * Минимальное из высоты по умолчанию, половины ширины экрана и половины высоты экрана */
+  private calculateHeight(): number {
+    const screenHalfHeight = window.innerHeight / 2;
+    const screenHalfWidth = window.innerWidth / 2;
+
+    return Math.min(BASIC_NOTE_HEIGHT, screenHalfHeight, screenHalfWidth);
   }
 }

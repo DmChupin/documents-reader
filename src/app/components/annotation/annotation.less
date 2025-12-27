@@ -9,6 +9,13 @@
   gap: 16px;
   background: white;
   opacity: 0.95;
+  touch-action: none;
+
+  @media (max-width: 640px) {
+    border-radius: 4px;
+    padding: 8px 4px;
+    gap: 8px;
+  }
 }
 
 .header {
@@ -17,6 +24,10 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+  }
 }
 
 .action-buttons {
@@ -29,6 +40,11 @@
     color: #fff;
     border-radius: 4px;
     padding: 4px;
+
+    @media (max-width: 640px) {
+      padding: 2px;
+      border-radius: 2px;
+    }
 
     &:hover {
       background-color: #6c86e2;
@@ -50,9 +66,21 @@
   width: calc(100% - 32px);
   height: auto;
   flex-grow: 1;
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 4px;
+    width: calc(100% - 8px);
+  }
 }
 
 .button-icon {
   height: 20px;
   width: 20px;
+
+  @media (max-width: 640px) {
+    height: 12px;
+    width: 12px;
+  }
 }
