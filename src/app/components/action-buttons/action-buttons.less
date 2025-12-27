@@ -1,26 +1,28 @@
+@import 'variables.less';
+
 :host {
   position: fixed;
   left: 16px;
   top: 24px;
-  border: 2px solid #6c86e2;
+  border: 2px solid @primary;
   background: white;
-  border-radius: 4px;
-  padding: 16px 8px;
+  border-radius: @base-border-radius;
+  padding: calc(@base-gap * 2) @base-gap;
 
   @media (max-width: 640px) {
     left: 8px;
     top: 12px;
-    padding: 8px 4px;
+    padding: @base-gap calc(@base-gap / 2);
   }
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: calc(@base-gap * 1.5);
 
   @media (max-width: 640px) {
-    gap: 8px;
+    gap: @base-gap;
   }
 }
 
@@ -28,12 +30,12 @@
   cursor: pointer;
   border: none;
   background: none;
-  padding: 8px;
-  border-radius: 4px;
+  padding: @base-gap;
+  border-radius: @base-border-radius;
   transition: background-color 0.5s ease;
 
   @media (max-width: 640px) {
-    padding: 4px;
+    padding: calc(@base-gap / 2);
   }
 
   .button-icon {
@@ -47,16 +49,16 @@
   }
 
   &:active {
-    background-color: #314692;
+    background-color: @primary-dark;
   }
 
   @media (hover: hover) {
     &:hover {
-      background-color: #6c86e2;
+      background-color: @primary;
     }
   }
 }
 
 .active {
-  background-color: #6c86e2;
+  background-color: @primary;
 }
