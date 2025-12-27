@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { MockService } from './mock.service';
 import { EMPTY, Observable } from 'rxjs';
 import { AnnotationInfo } from '../models';
+import { ReaderFeatureService } from './reader.feature.service';
 
 /** Ширина аннотации при добавлении по умолчанию в px */
 const BASIC_NOTE_WIDTH = 250;
@@ -13,6 +14,7 @@ const BASIC_NOTE_HEIGHT = 220;
   providedIn: 'root',
 })
 export class AnnotationsFeatureService {
+  private readonly _readerFeatureService = inject(ReaderFeatureService);
   private readonly _mockService = inject(MockService);
 
   /** Получение документа по id */
@@ -35,8 +37,8 @@ export class AnnotationsFeatureService {
       text: '',
       height,
       width,
-      x: targetX + window.scrollX,
-      y: targetY + window.scrollY,
+      x: (targetX + window.scrollX) / this._readerFeatureService.zoomLevel(),
+      y: (targetY + window.scrollY) / this._readerFeatureService.zoomLevel(),
       documentId,
     };
 
