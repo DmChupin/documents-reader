@@ -1,31 +1,22 @@
 import { Directive, ElementRef, inject, input, output } from '@angular/core';
-import {
-  finalize,
-  fromEvent,
-  map,
-  Observable,
-  Subscription,
-  switchMap,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { finalize, fromEvent, map, Observable, switchMap, takeUntil, tap } from 'rxjs';
+import { ReaderFeatureService } from '../services';
 
 /** Директива для перетаскивания */
 @Directive({
   selector: '[appDrag]',
 })
 export class Drag {
+  private readonly _readerFeatureService = inject(ReaderFeatureService);
   private readonly _elementRef = inject(ElementRef);
+  private readonly _zoomLevel = this._readerFeatureService.zoomLevel;
 
-  /** Подписка для каждой аннотации */
-  private subscriptions = new Subscription();
   /** Координаты X,Y */
   private coordinates: { x: number; y: number };
 
   /** Событие при окончании перетаскивания */
   handleDrag = output<{ x: number; y: number }>();
 
-  /** @inheritdoc */
   ngOnInit() {
     const element = this._elementRef.nativeElement;
 
@@ -35,7 +26,6 @@ export class Drag {
     this.handleTouch(element);
   }
 
-  /** Обработка нажатия мыши */
   private handleMouse(element: HTMLDivElement): void {
     const mousedown$ = fromEvent<PointerEvent>(element, 'mousedown');
     const mousemove$ = fromEvent<PointerEvent>(document, 'mousemove');
@@ -47,8 +37,8 @@ export class Drag {
 
         return mousemove$.pipe(
           map((move) => ({
-            x: initialLeft + (move.clientX - startX),
-            y: initialTop + (move.clientY - startY),
+            x: initialLeft + (move.clientX - startX) / this._zoomLevel(),
+            y: initialTop + (move.clientY - startY) / this._zoomLevel(),
           })),
           tap((move) => (this.coordinates = { x: move.x, y: move.y })),
           takeUntil(mouseup$),
@@ -57,10 +47,9 @@ export class Drag {
       }),
     );
 
-    this.addSubscription(drag$, element);
+    this.subscribeDrag(drag$, element);
   }
 
-  /** Обработка тача */
   private handleTouch(element: HTMLDivElement): void {
     const touchstart$ = fromEvent<TouchEvent>(element, 'touchstart');
     const touchmove$ = fromEvent<TouchEvent>(document, 'touchmove');
@@ -72,8 +61,8 @@ export class Drag {
 
         return touchmove$.pipe(
           map((move) => ({
-            x: initialLeft + (move.touches[0].clientX - startX),
-            y: initialTop + (move.touches[0].clientY - startY),
+            x: initialLeft + (move.touches[0].clientX - startX) / this._zoomLevel(),
+            y: initialTop + (move.touches[0].clientY - startY) / this._zoomLevel(),
           })),
           tap((move) => (this.coordinates = { x: move.x, y: move.y })),
           takeUntil(touchend$),
@@ -82,7 +71,7 @@ export class Drag {
       }),
     );
 
-    this.addSubscription(drag$, element);
+    this.subscribeDrag(drag$, element);
   }
 
   /** Координаты элемента и pointer-а */
@@ -103,16 +92,13 @@ export class Drag {
     };
   }
 
-  /** Добавляем подписку на элемент */
-  private addSubscription(
+  private subscribeDrag(
     drag$: Observable<{ x: number; y: number }>,
     element: HTMLDivElement,
   ): void {
-    this.subscriptions.add(
-      drag$.subscribe((position) => {
-        element.style.left = `${position.x}px`;
-        element.style.top = `${position.y}px`;
-      }),
-    );
+    drag$.subscribe((position) => {
+      element.style.left = `${position.x}px`;
+      element.style.top = `${position.y}px`;
+    });
   }
 }

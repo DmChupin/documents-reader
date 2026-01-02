@@ -18,17 +18,14 @@ export class ReaderFeatureService {
   readonly activeTool = signal<Tool>(Tool.Pointer);
   readonly zoomLevel = signal<number>(BASE_ZOOM_LEVEL);
 
-  /** Выбранный инструмент для работы со страницей */
   selectTool(tool: Tool): void {
     this.activeTool.set(tool);
   }
 
-  /** Уменьшить зум */
   zoomOut(): void {
     this.zoomLevel.set(Math.max(this.zoomLevel() - ZOOM_CHANGE_LEVEL, ZOOM_MIN_LEVEL));
   }
 
-  /** Увеличить зум */
   zoomIn(): void {
     this.zoomLevel.set(Math.min(this.zoomLevel() + ZOOM_CHANGE_LEVEL, ZOOM_MAX_LEVEL));
   }

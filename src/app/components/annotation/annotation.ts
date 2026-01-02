@@ -15,23 +15,17 @@ import { JsonPipe } from '@angular/common';
 })
 export class Annotation implements OnInit {
   private readonly _destroyRef = inject(DestroyRef);
-  /** Анннотация */
   readonly annotation = input.required<AnnotationInfo>();
 
-  /** Контрол с текстом в аннотации */
   annotationControl: FormControl<string | null>;
 
-  /** Output-событие удаление аннотации */
   delete = output<string>();
-  /** Обновить аннотацию */
   update = output<AnnotationInfo>();
 
-  /** @inheritdoc */
   constructor() {
     effect(() => this.annotationControl.setValue(this.annotation().text));
   }
 
-  /** @inheritdoc */
   ngOnInit(): void {
     this.annotationControl = new FormControl<string | null>(null);
 
@@ -49,7 +43,6 @@ export class Annotation implements OnInit {
       .subscribe();
   }
 
-  /** Удаление аннотации */
   deleteAnnotation(): void {
     this.delete.emit(this.annotation().id);
   }

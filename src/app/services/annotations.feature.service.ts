@@ -4,6 +4,8 @@ import { EMPTY, Observable } from 'rxjs';
 import { AnnotationInfo } from '../models';
 import { ReaderFeatureService } from './reader.feature.service';
 import { v4 as uuidv4 } from 'uuid';
+import { API_SERVICE } from '../app.config';
+import { ApiService } from './api-service';
 
 /** Ширина аннотации при добавлении по умолчанию в px */
 const BASIC_NOTE_WIDTH = 250;
@@ -16,18 +18,12 @@ const BASIC_NOTE_HEIGHT = 220;
 })
 export class AnnotationsFeatureService {
   private readonly _readerFeatureService = inject(ReaderFeatureService);
-  private readonly _mockService = inject(MockService);
+  private readonly _apiService = inject<ApiService | MockService>(API_SERVICE);
 
-  /** Получение документа по id */
-  getAnnotations(documentId: number | null): Observable<AnnotationInfo[]> {
-    if (!documentId) {
-      return EMPTY;
-    }
-
-    return this._mockService.getAnnotations(documentId);
+  getAnnotations(documentId: number): Observable<AnnotationInfo[]> {
+    return this._apiService.getAnnotations(documentId);
   }
 
-  /** Добавление аннотации */
   addAnnotation(documentId: number, targetX: number, targetY: number): void {
     const height = this.calculateHeight();
     const width = this.calculateWidth();
@@ -43,19 +39,17 @@ export class AnnotationsFeatureService {
       documentId,
     };
 
-    this._mockService.addAnnotation(newAnnotation);
+    this._apiService.addAnnotation(newAnnotation);
   }
 
-  /** Удаление аннотации */
   deleteAnnotation(annotationId: string): void {
-    this._mockService.deleteAnnotation(annotationId);
+    this._apiService.deleteAnnotation(annotationId);
   }
 
-  /** Обновить аннотацию */
   updateAnnotation(annotation: AnnotationInfo): void {
     const annotationId = annotation.id;
 
-    this._mockService.updateAnnotation(annotationId, annotation);
+    this._apiService.updateAnnotation(annotationId, annotation);
   }
 
   /** Расчёт ширины аннотации */
@@ -67,7 +61,8 @@ export class AnnotationsFeatureService {
 
   /**
    * Расчёт высоты аннотации
-   * Минимальное из высоты по умолчанию, половины ширины экрана и половины высоты экрана */
+   * Минимальное из высоты по умолчанию, половины ширины экрана и половины высоты экрана
+   */
   private calculateHeight(): number {
     const screenHalfHeight = window.innerHeight / 2;
     const screenHalfWidth = window.innerWidth / 2;

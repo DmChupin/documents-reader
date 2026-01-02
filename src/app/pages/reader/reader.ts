@@ -25,14 +25,11 @@ export class Reader {
   private readonly _documentId = this._route.snapshot.paramMap.get('documentId');
   private readonly _activeTool = this._readerFeatureService.activeTool;
 
-  /** Уровень зума */
   readonly zoomLevel = this._readerFeatureService.zoomLevel;
-  /** Документ */
+
   document: Signal<UploadedDocument | undefined>;
-  /** Список аннотаций */
   annotations: Signal<AnnotationInfo[] | undefined>;
 
-  /** @inheritdoc */
   constructor() {
     if (!this._documentId) {
       return;
@@ -42,7 +39,6 @@ export class Reader {
     this.annotations = toSignal(this._annotationsFeatureService.getAnnotations(+this._documentId));
   }
 
-  /** Нажатие на страницу */
   pageClick(event: PointerEvent): void {
     if (!this._documentId) return;
 
@@ -62,12 +58,10 @@ export class Reader {
     }
   }
 
-  /** Удаление аннотации */
   deleteAnnotation(annotationId: string): void {
     this._annotationsFeatureService.deleteAnnotation(annotationId);
   }
 
-  /** Сохранить страницу с аннотациями */
   savePageWithAnnotations(): void {
     const pages = this.document()?.pages;
     const annotations = this.annotations();
@@ -80,17 +74,14 @@ export class Reader {
     });
   }
 
-  /** Обновить аннотацию */
   updateAnnotation(annotation: AnnotationInfo): void {
     this._annotationsFeatureService.updateAnnotation(annotation);
   }
 
-  /** Увеличить зум */
   zoomIn(): void {
     this._readerFeatureService.zoomIn();
   }
 
-  /** Уменьшить зум */
   zoomOut(): void {
     this._readerFeatureService.zoomOut();
   }

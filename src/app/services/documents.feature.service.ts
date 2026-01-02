@@ -1,21 +1,18 @@
-import { EMPTY, filter, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UploadedDocument } from '../models';
 import { inject, Injectable } from '@angular/core';
 import { MockService } from './mock.service';
+import { ApiService } from './api-service';
+import { API_SERVICE } from '../app.config';
 
 /** Feature-сервис для работы с документами */
 @Injectable({
   providedIn: 'root',
 })
 export class DocumentsFeatureService {
-  private readonly _mockService = inject(MockService);
+  private readonly _apiService = inject<ApiService | MockService>(API_SERVICE);
 
-  /** Получение документа по id */
-  getDocument(documentId: number | null): Observable<UploadedDocument> {
-    if (!documentId) {
-      return EMPTY;
-    }
-
-    return this._mockService.getDocuments(documentId);
+  getDocument(documentId: number): Observable<UploadedDocument> {
+    return this._apiService.getDocuments(documentId);
   }
 }

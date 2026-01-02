@@ -16,29 +16,22 @@ export class ActionButtons {
     () => this._readerFeatureService.activeTool() === Tool.Annotation,
   );
 
-  /** Output-событие увеличить документ */
   zoomIn = output<void>();
-  /** Output-событие уменьшить документ */
   zoomOut = output<void>();
-  /** Output-событие сохранить документ */
   save = output<void>();
 
-  /** Увеличить размер страницы */
   zoomPageIn(): void {
     this.zoomIn.emit();
   }
 
-  /** Уменьшить размер страницы */
   zoomPageOut(): void {
     this.zoomOut.emit();
   }
 
-  /** Сохранить страницу */
   savePageWithAnnotations(): void {
     this.save.emit();
   }
 
-  /** Выбор инструмента */
   selectToolAnnotation(): void {
     this._readerFeatureService.selectTool(Tool.Annotation);
   }
