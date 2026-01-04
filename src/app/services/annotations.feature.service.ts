@@ -18,13 +18,13 @@ const BASIC_NOTE_HEIGHT = 220;
 })
 export class AnnotationsFeatureService {
   private readonly _readerFeatureService = inject(ReaderFeatureService);
-  private readonly _apiService = inject<ApiService | MockService>(API_SERVICE);
+  private readonly _apiService = inject(API_SERVICE);
 
   getAnnotations(documentId: number): Observable<AnnotationInfo[]> {
     return this._apiService.getAnnotations(documentId);
   }
 
-  addAnnotation(documentId: number, targetX: number, targetY: number): void {
+  addAnnotation(documentId: number, targetX: number, targetY: number): Observable<void> {
     const height = this.calculateHeight();
     const width = this.calculateWidth();
     const currentDate = new Date();
@@ -39,17 +39,17 @@ export class AnnotationsFeatureService {
       documentId,
     };
 
-    this._apiService.addAnnotation(newAnnotation);
+    return this._apiService.addAnnotation(newAnnotation);
   }
 
-  deleteAnnotation(annotationId: string): void {
-    this._apiService.deleteAnnotation(annotationId);
+  deleteAnnotation(annotationId: string): Observable<void> {
+    return this._apiService.deleteAnnotation(annotationId);
   }
 
-  updateAnnotation(annotation: AnnotationInfo): void {
+  updateAnnotation(annotation: AnnotationInfo): Observable<void> {
     const annotationId = annotation.id;
 
-    this._apiService.updateAnnotation(annotationId, annotation);
+    return this._apiService.updateAnnotation(annotationId, annotation);
   }
 
   /** Расчёт ширины аннотации */

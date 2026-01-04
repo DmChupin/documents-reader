@@ -8,7 +8,7 @@ import { routes } from './app.routes';
 import { ApiService, MockService } from './services';
 import { environment } from '../environments/environment';
 
-export const API_SERVICE = new InjectionToken('API_SERVICE');
+export const API_SERVICE = new InjectionToken<ApiService | MockService>('API_SERVICE');
 
 export const appConfig: ApplicationConfig = {
   providers: [

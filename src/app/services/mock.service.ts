@@ -104,22 +104,26 @@ export class MockService {
     );
   }
 
-  addAnnotation(annotation: AnnotationInfo): void {
+  addAnnotation(annotation: AnnotationInfo): Observable<void> {
     ANNOTATIONS_MOCK_DATA.push(annotation);
 
     this._annotations.next(ANNOTATIONS_MOCK_DATA);
+
+    return of();
   }
 
-  deleteAnnotation(annotationId: string): void {
+  deleteAnnotation(annotationId: string): Observable<void> {
     ANNOTATIONS_MOCK_DATA.splice(
       ANNOTATIONS_MOCK_DATA.findIndex((annotation) => annotation.id === annotationId),
       1,
     );
 
     this._annotations.next(ANNOTATIONS_MOCK_DATA);
+
+    return of();
   }
 
-  updateAnnotation(annotationId: string, newAnnotation: AnnotationInfo): void {
+  updateAnnotation(annotationId: string, newAnnotation: AnnotationInfo): Observable<void> {
     ANNOTATIONS_MOCK_DATA.splice(
       ANNOTATIONS_MOCK_DATA.findIndex((annotation) => annotation.id === annotationId),
       1,
@@ -127,5 +131,7 @@ export class MockService {
     );
 
     this._annotations.next(ANNOTATIONS_MOCK_DATA);
+
+    return of();
   }
 }
